@@ -105,12 +105,14 @@ func main() {
 		log.Errorf("starting service: loading certificates: %v\n", err)
 		os.Exit(1)
 	}
-	defaultCert, err := tls.LoadX509KeyPair(cfg.CertFile, cfg.KeyFile)
-	if err != nil {
-		log.Errorf("starting service: loading default certificate: %v\n", err)
-		os.Exit(1)
+	if cfg.CertFile != "" && cfg.KeyFile != "" {
+		defaultCert, err := tls.LoadX509KeyPair(cfg.CertFile, cfg.KeyFile)
+		if err != nil {
+			log.Errorf("starting service: loading default certificate: %v\n", err)
+			os.Exit(1)
+		}
+		certs = append(certs, defaultCert)
 	}
-	certs = append(certs, defaultCert)
 
 	httpListener, httpConns, httpConnStateCallback, err := web.InterceptListen("tcp", fmt.Sprintf(":%d", cfg.Port))
 	if err != nil {

@@ -121,7 +121,7 @@ func LoadRemapStats(stats stat.Stats, httpConns *web.ConnMap, httpsConns *web.Co
 		jsonStats["plugin.remap_stats."+ruleName+".cache_misses"] = statsRemap.CacheMisses()
 	}
 
-	jsonStats["proxy.process.http.current_client_connections"] = httpConns.Len() + httpsConns.Len()
+	jsonStats["proxy.process.http.current_client_connections"] = httpConns.Len() //+ httpsConns.Len()
 	jsonStats["proxy.process.http.cache_hits"] = stats.CacheHits()
 	jsonStats["proxy.process.http.cache_misses"] = stats.CacheMisses()
 	jsonStats["proxy.process.http.cache_capacity_bytes"] = stats.CacheCapacity()
