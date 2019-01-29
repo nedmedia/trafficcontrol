@@ -55,9 +55,12 @@ func jwtAuth(icfg interface{}, d OnRequestData) bool {
 	jwtConfig := icfg.(*JwtConfig)
 	tokenOnRequest, err := request.OAuth2Extractor.ExtractToken(d.R)
 	if err != nil {
-		d.W.WriteHeader(401)
-		d.W.Write([]byte(err.Error()))
-		return true
+		tokenOnRequest = d.R.Header.Get("token")
+		if tokenOnRequest == "" {
+			d.W.WriteHeader(401)
+			d.W.Write([]byte(err.Error()))
+			return true
+		}
 	}
 	parser := &jwt.Parser{}
 	token, err := parser.ParseWithClaims(tokenOnRequest, &jwt.MapClaims{}, func(token *jwt.Token) (interface{}, error) {
