@@ -15,6 +15,7 @@ package remap
 */
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -175,7 +176,16 @@ func (p *RemappingProducer) GetNext(r *http.Request) (Remapping, bool, error) {
 
 	newURI, proxyURL, transport := p.rule.URI(p.oldURI, r.URL.Path, r.URL.RawQuery, p.failures)
 	p.failures++
-	newReq, err := http.NewRequest(r.Method, newURI, nil)
+	bodyContent := bytes.Buffer{}
+	readBuffer := make([]byte, 4096)
+	for {
+		readBuffLen, err := r.Body.Read(readBuffer)
+		bodyContent.Write(readBuffer[0:readBuffLen])
+		if readBuffLen <= 0 || err != nil {
+			break
+		}
+	}
+	newReq, err := http.NewRequest(r.Method, newURI, &bodyContent)
 	if err != nil {
 		return Remapping{}, false, fmt.Errorf("creating new request: %v\n", err)
 	}
