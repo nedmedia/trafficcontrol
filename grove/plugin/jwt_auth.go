@@ -47,6 +47,14 @@ func init() {
 	AddPlugin(10000, Funcs{onRequest: jwtAuth, startup: jwtStartup, load: jwtLoad})
 }
 
+func sendUnauthorized(d OnRequestData) {
+	origin := d.R.Header.Get("Origin")
+	if origin != "" {
+		d.W.Header().Set("Access-Control-Allow-Origin", origin)
+	}
+	d.W.WriteHeader(http.StatusUnauthorized)
+}
+
 func jwtAuth(icfg interface{}, d OnRequestData) bool {
 	if d.R.Method == http.MethodOptions {
 		return false
@@ -57,8 +65,7 @@ func jwtAuth(icfg interface{}, d OnRequestData) bool {
 	if err != nil {
 		tokenOnRequest = d.R.Header.Get("Token")
 		if tokenOnRequest == "" {
-			d.W.WriteHeader(401)
-			d.W.Write([]byte(err.Error()))
+			sendUnauthorized(d)
 			return true
 		}
 	}
@@ -82,13 +89,11 @@ func jwtAuth(icfg interface{}, d OnRequestData) bool {
 		return nil, fmt.Errorf("Unknown key")
 	})
 	if err != nil {
-		d.W.WriteHeader(401)
-		d.W.Write([]byte(err.Error()))
+		sendUnauthorized(d)
 		return true
 	}
 	if !token.Valid {
-		d.W.WriteHeader(401)
-		d.W.Write([]byte("Invalid token"))
+		sendUnauthorized(d)
 		return true
 	}
 	if claims, ok := token.Claims.(*jwt.MapClaims); ok {
