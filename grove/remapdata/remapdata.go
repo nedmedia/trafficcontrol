@@ -24,10 +24,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/apache/trafficcontrol/grove/chash"
-	"github.com/apache/trafficcontrol/grove/icache"
+	"github.com/nedmedia/trafficcontrol/grove/chash"
+	"github.com/nedmedia/trafficcontrol/grove/icache"
 
-	"github.com/apache/trafficcontrol/lib/go-log"
+	"github.com/nedmedia/trafficcontrol/lib/go-log"
 )
 
 type Reuse int

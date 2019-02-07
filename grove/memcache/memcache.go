@@ -18,10 +18,10 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/apache/trafficcontrol/grove/cacheobj"
-	"github.com/apache/trafficcontrol/grove/lru"
+	"github.com/nedmedia/trafficcontrol/grove/cacheobj"
+	"github.com/nedmedia/trafficcontrol/grove/lru"
 
-	"github.com/apache/trafficcontrol/lib/go-log"
+	"github.com/nedmedia/trafficcontrol/lib/go-log"
 )
 
 // MemCache is a threadsafe memory cache with a soft byte limit, enforced via LRU.

@@ -19,8 +19,8 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/apache/trafficcontrol/grove/web"
-	log "github.com/apache/trafficcontrol/lib/go-log"
+	"github.com/nedmedia/trafficcontrol/grove/web"
+	log "github.com/nedmedia/trafficcontrol/lib/go-log"
 	geoip2 "github.com/oschwald/geoip2-golang"
 )
 

@@ -21,10 +21,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/apache/trafficcontrol/grove/cacheobj"
-	"github.com/apache/trafficcontrol/grove/lru"
+	"github.com/nedmedia/trafficcontrol/grove/cacheobj"
+	"github.com/nedmedia/trafficcontrol/grove/lru"
 
-	"github.com/apache/trafficcontrol/lib/go-log"
+	"github.com/nedmedia/trafficcontrol/lib/go-log"
 
 	bolt "github.com/coreos/bbolt"
 )

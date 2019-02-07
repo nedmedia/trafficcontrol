@@ -34,13 +34,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/apache/trafficcontrol/lib/go-tc"
-	to "github.com/apache/trafficcontrol/traffic_ops/client"
+	"github.com/nedmedia/trafficcontrol/lib/go-tc"
+	to "github.com/nedmedia/trafficcontrol/traffic_ops/client"
 
-	"github.com/apache/trafficcontrol/grove/config"
-	"github.com/apache/trafficcontrol/grove/remap"
-	"github.com/apache/trafficcontrol/grove/remapdata"
-	"github.com/apache/trafficcontrol/grove/web"
+	"github.com/nedmedia/trafficcontrol/grove/config"
+	"github.com/nedmedia/trafficcontrol/grove/remap"
+	"github.com/nedmedia/trafficcontrol/grove/remapdata"
+	"github.com/nedmedia/trafficcontrol/grove/web"
 )
 
 // Duplicating Hdr and ModHdrs here for now...

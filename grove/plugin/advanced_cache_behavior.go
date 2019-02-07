@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"strings"
 
-	log "github.com/apache/trafficcontrol/lib/go-log"
+	log "github.com/nedmedia/trafficcontrol/lib/go-log"
 )
 
 func init() {

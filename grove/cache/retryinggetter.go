@@ -20,14 +20,14 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/apache/trafficcontrol/grove/cacheobj"
-	"github.com/apache/trafficcontrol/grove/icache"
-	"github.com/apache/trafficcontrol/grove/remap"
-	"github.com/apache/trafficcontrol/grove/rfc"
-	"github.com/apache/trafficcontrol/grove/thread"
-	"github.com/apache/trafficcontrol/grove/web"
+	"github.com/nedmedia/trafficcontrol/grove/cacheobj"
+	"github.com/nedmedia/trafficcontrol/grove/icache"
+	"github.com/nedmedia/trafficcontrol/grove/remap"
+	"github.com/nedmedia/trafficcontrol/grove/rfc"
+	"github.com/nedmedia/trafficcontrol/grove/thread"
+	"github.com/nedmedia/trafficcontrol/grove/web"
 
-	"github.com/apache/trafficcontrol/lib/go-log"
+	"github.com/nedmedia/trafficcontrol/lib/go-log"
 )
 
 const CodeConnectFailure = http.StatusBadGateway
