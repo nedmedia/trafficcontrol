@@ -15,12 +15,13 @@ package plugin
 */
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 
-	log "github.com/apache/trafficcontrol/lib/go-log"
+	log "github.com/nedmedia/trafficcontrol/lib/go-log"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 	"github.com/iancoleman/strcase"
@@ -138,7 +139,11 @@ func indexSecrets(jwtConfig *JwtConfig, jwtContext *JwtContext) error {
 			}
 			jwtContext.SecretsIndex[indexKey] = pubKey
 		case "hs256":
-			jwtContext.SecretsIndex[indexKey] = []byte(secret.Value)
+			data, err := base64.URLEncoding.DecodeString(secret.Value)
+			if err != nil {
+				return err
+			}
+			jwtContext.SecretsIndex[indexKey] = data
 		default:
 			return fmt.Errorf("JWT %v algorithm is not supported", secret.Algoritm)
 		}
