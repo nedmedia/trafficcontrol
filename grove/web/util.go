@@ -107,8 +107,34 @@ func TryFlush(w http.ResponseWriter) {
 	}
 }
 
+type RequestReturn struct {
+	a int
+	b http.Header
+	c []byte
+	d time.Time
+	e time.Time
+	f error
+}
 // request makes the given request and returns its response code, headers, body, the request time, response time, and any error.
 func Request(transport *http.Transport, r *http.Request) (int, http.Header, []byte, time.Time, time.Time, error) {
+	c := make(chan RequestReturn)
+	go func() {
+		ret := RequestReturn{}
+		ret.a, ret.b, ret.c, ret.d, ret.e, ret.f = DoRequest(transport, r)
+		c <- ret
+	}();
+	reqTime := time.Now()
+	select {
+	case <-time.After(5 * time.Second):
+		go func() { <-c }()
+	case ret := <-c:
+		return ret.a, ret.b, ret.c, ret.d, ret.e, ret.f
+	}
+	return 0, nil, nil, reqTime, time.Now(), errors.New("request error: Timeout")
+}
+
+// request makes the given request and returns its response code, headers, body, the request time, response time, and any error.
+func DoRequest(transport *http.Transport, r *http.Request) (int, http.Header, []byte, time.Time, time.Time, error) {
 	log.Debugf("request requesting %v headers %v\n", r.RequestURI, r.Header)
 	rr := r
 
