@@ -136,7 +136,7 @@ func GetAndCache(
 		} else {
 			req.Header.Del(ModifiedSinceHdr)
 		}
-		respCode, respHeader, respBody, reqTime, reqRespTime, err := web.Request(transport, req)
+		respCode, respHeader, respBody, reqTime, reqRespTime, err := web.Request(transport, req, timeout)
 		log.Debugf("GetAndCache web.Request URI %v %v %v cacheKey %v rule %v parent %v error %v reval %v code %v len(body) %v (reqid %v)\n", req.URL.Scheme, req.URL.Host, req.URL.EscapedPath(), cacheKey, remapName, proxyURLStr, err, revalidateObj != nil, respCode, len(respBody), reqID)
 
 		if err != nil {

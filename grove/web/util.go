@@ -108,12 +108,13 @@ func TryFlush(w http.ResponseWriter) {
 }
 
 // request makes the given request and returns its response code, headers, body, the request time, response time, and any error.
-func Request(transport *http.Transport, r *http.Request) (int, http.Header, []byte, time.Time, time.Time, error) {
+func Request(transport *http.Transport, r *http.Request, timeout time.Duration) (int, http.Header, []byte, time.Time, time.Time, error) {
 	log.Debugf("request requesting %v headers %v\n", r.RequestURI, r.Header)
 	rr := r
 
 	reqTime := time.Now()
-	resp, err := transport.RoundTrip(rr)
+	httpClient := &http.Client{Transport: transport, Timeout: timeout}
+	resp, err := httpClient.Do(rr)
 	respTime := time.Now()
 	if err != nil {
 		return 0, nil, nil, reqTime, respTime, errors.New("request error: " + err.Error())
